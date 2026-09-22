@@ -267,7 +267,6 @@
     .board .pc.taken { opacity: 0; scale: .4; }
     .board .pc.hop { animation: hop .75s var(--ease); }
     @keyframes hop { 50% { scale: 1.32; } }
-    .board .hl rect { fill: rgba(244, 244, 242, .16); opacity: 0; transition: opacity .4s ease, x .75s var(--ease), y .75s var(--ease); }
     .board.no-anim * { transition: none !important; animation: none !important; }
 
     /* ---------- contact ---------- */
@@ -511,7 +510,6 @@
 <rect x='300' y='350' width='50' height='50' fill='rgba(244,244,242,.045)'/>
 <rect x='350' y='350' width='50' height='50' fill='rgba(244,244,242,.13)'/>
 </g>
-<g class="hl"><rect class="hl-from" width="50" height="50"/><rect class="hl-to" width="50" height="50"/></g>
 <g class="pieces">
 <use href="#pc-r" class="pc w" data-sq="a1" width="50" height="50" transform="translate(0 350)"/>
 <use href="#pc-p" class="pc w" data-sq="a2" width="50" height="50" transform="translate(0 300)"/>
@@ -646,11 +644,6 @@
       const xy = (sq) => [(sq.charCodeAt(0) - 97) * SQ, (8 - +sq[1]) * SQ];
       const pieces = Array.from(svg.querySelectorAll('.pc'));
       const place = (el, sq) => { const [x, y] = xy(sq); el.style.transform = `translate(${x}px, ${y}px)`; };
-      const hl = [svg.querySelector('.hl-from'), svg.querySelector('.hl-to')];
-      const highlight = (m) => {
-        if (!m) { hl.forEach((r) => { r.style.opacity = 0; }); return; }
-        [m.from, m.to].forEach((sq, i) => { const [x, y] = xy(sq); hl[i].setAttribute('x', x); hl[i].setAttribute('y', y); hl[i].style.x = x + 'px'; hl[i].style.y = y + 'px'; hl[i].style.opacity = 1; });
-      };
       // 1. d4 d5  2. c4 dxc4  3. e4 Nf6  4. Nc3
       const MOVES = [
         { from: 'd2', to: 'd4' },
@@ -666,7 +659,6 @@
         timers.forEach(clearTimeout); timers = []; at = {};
         svg.classList.add('no-anim');
         pieces.forEach((el) => { el.classList.remove('taken', 'hop'); place(el, el.dataset.sq); at[el.dataset.sq] = el; });
-        highlight(null);
         void svg.getBoundingClientRect();
         requestAnimationFrame(() => requestAnimationFrame(() => svg.classList.remove('no-anim')));
       };
@@ -675,7 +667,6 @@
         if (victim) victim.classList.add('taken');
         place(el, m.to); delete at[m.from]; at[m.to] = el;
         if (m.hop) el.classList.add('hop');
-        highlight(m);
       };
       const start = () => { MOVES.forEach((m, i) => timers.push(setTimeout(() => play(i), 800 + i * 1200))); };
       reset();
