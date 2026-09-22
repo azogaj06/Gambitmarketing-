@@ -11,7 +11,14 @@ One-page site. No build step, no dependencies: `index.html` plus the files in `a
 
 ## Publish
 
-GitHub Pages: Settings → Pages → Source: "Deploy from a branch", pick the branch and `/ (root)`. The site will be live at the URL GitHub shows there. Any static host (Netlify, Vercel, Cloudflare Pages) works the same way: point it at this folder.
+The site is served by GitHub Pages at **https://gambitmarketing.ca** (the `CNAME` file holds the domain).
+
+One-time setup:
+
+1. GitHub: Settings → Pages → Build and deployment → Source: "Deploy from a branch" → pick the branch and `/ (root)` → Save. Under "Custom domain" enter `gambitmarketing.ca` and Save. Once the DNS check passes, tick "Enforce HTTPS".
+2. Registrar (WHC): in the DNS zone for `gambitmarketing.ca`, add four `A` records for `@` pointing to `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`, and one `CNAME` record for `www` pointing to `azogaj06.github.io`. Remove any parking `A` or `CNAME` records on `@` and `www` first.
+
+After that, every push to the branch goes live within a minute or two.
 
 ## Contact form
 
