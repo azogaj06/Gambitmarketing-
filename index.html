@@ -79,9 +79,13 @@
       display: flex; align-items: center; justify-content: space-between; gap: 24px;
       padding-inline: var(--gutter);
       color: var(--white);
-      transition: color .35s;
+      background: rgba(11, 11, 13, .78);
+      -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(244, 244, 242, .08);
+      transition: color .35s, background-color .35s, border-color .35s;
     }
-    body[data-theme="light"] .top { color: var(--black); }
+    body[data-theme="light"] .top { color: var(--black); background: rgba(244, 244, 242, .84); border-bottom-color: rgba(11, 11, 13, .1); }
+    body[data-theme="accent"] .top { background: rgba(82, 102, 44, .86); border-bottom-color: rgba(244, 244, 242, .14); }
     .top .brand {
       display: inline-flex; align-items: center; gap: 12px;
       font-weight: 900; font-stretch: 118%;
@@ -600,11 +604,11 @@
     document.documentElement.classList.replace('no-js', 'js');
 
     // Header colour follows whichever section is under it.
-    const sections = Array.from(document.querySelectorAll('[data-theme]'));
+    const sections = Array.from(document.querySelectorAll('section[data-theme]'));
     let ticking = false;
     function setTheme() {
       ticking = false;
-      const y = 32;
+      const y = 44;
       for (const s of sections) {
         const r = s.getBoundingClientRect();
         if (r.top <= y && r.bottom > y) { document.body.dataset.theme = s.dataset.theme; return; }
