@@ -257,10 +257,6 @@
     .gambit .copy strong { color: var(--white); font-weight: 500; }
     .board-wrap { width: 100%; max-width: 400px; margin-inline: auto; }
     .board .co { font-family: var(--mono); font-size: 9px; fill: rgba(244, 244, 242, .45); }
-    .board-cap {
-      display: flex; justify-content: space-between; gap: 16px;
-      margin-top: 14px; color: var(--muted-inv);
-    }
 
     /* ---------- contact ---------- */
     .contact { background: var(--accent); color: #fff; }
@@ -311,18 +307,6 @@
 
     /* ---------- footer ---------- */
     .foot { background: var(--black); color: var(--white); }
-    .foot-seal {
-      display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 40px var(--gutter); align-items: center;
-      padding: clamp(56px, 8vw, 110px) var(--gutter);
-    }
-    .foot-seal img { width: min(100%, 420px); height: auto; margin-left: -4%; }
-    .foot-seal .line {
-      font-family: var(--serif); font-style: italic; font-weight: 400;
-      font-size: clamp(26px, 2.8vw, 40px); line-height: 1.15; letter-spacing: -.01em;
-      color: var(--muted-inv); max-width: 18ch; justify-self: end;
-    }
-    .foot-seal .line b { font-weight: 400; color: var(--white); }
     .foot-bar {
       padding: 26px var(--gutter);
       display: flex; flex-wrap: wrap; gap: 16px 40px;
@@ -352,8 +336,6 @@
       .services p { grid-column: 2; }
       .gambit .body, .contact .body { grid-template-columns: 1fr; }
       .board-wrap { margin-inline: 0; }
-      .foot-seal { grid-template-columns: 1fr; gap: 28px; }
-      .foot-seal .line { justify-self: start; }
       .foot-bar { justify-content: flex-start; }
     }
     @media (max-width: 480px) {
@@ -546,10 +528,6 @@
 <text x='396' y='395' class='co' text-anchor='end'>h</text>
 <rect x='.5' y='.5' width='399' height='399' fill='none' stroke='rgba(244,244,242,.25)'/>
 </svg>
-            <div class="board-cap mono">
-              <span>Fig. 1 Queen's Gambit</span>
-              <span>1. d4 d5 2. c4</span>
-            </div>
           </div>
         </div>
       </div>
@@ -589,10 +567,6 @@
   </main>
 
   <footer class="foot">
-    <div class="foot-seal">
-      <img src="assets/logo.webp" alt="Gambit" width="880" height="750" loading="lazy" decoding="async">
-      <p class="line reveal">Calculated moves. Meaningful risks. <b>Your move.</b></p>
-    </div>
     <div class="foot-bar">
       <span>&copy; <span id="year">2026</span> Gambit Marketing</span>
       <ul>

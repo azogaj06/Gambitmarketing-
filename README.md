@@ -7,7 +7,7 @@ One-page site. No build step, no dependencies: `index.html` plus the files in `a
 - **Email address**: search `index.html` for `gambitmkt07@gmail.com` (it appears twice, in the contact link and the form action) and replace both.
 - **Social links**: the three `href="#"` links in the footer.
 - **Copy**: everything is plain text in `index.html`.
-- **Logo**: `assets/logo.webp` is the full gold logo (footer). The knight emblem used in the header, hero and favicon is embedded in the CSS as a data URI (`--mark`). The original upload is kept at `assets/logo-source.png`.
+- **Logo**: the knight emblem used in the header, hero and favicon is embedded in the CSS as a data URI (`--mark`). The original upload is kept at `assets/logo-source.png`.
 
 ## Publish
 
