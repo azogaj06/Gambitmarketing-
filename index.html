@@ -96,7 +96,6 @@
       -webkit-mask: var(--mark) center / contain no-repeat;
       mask: var(--mark) center / contain no-repeat;
     }
-    .top .move { opacity: .7; }
     .top .cta {
       font-family: var(--mono); font-size: 12px; letter-spacing: .07em; text-transform: uppercase;
       text-decoration: none;
@@ -207,7 +206,7 @@
       position: sticky; top: 88px; align-self: start;
       display: flex; gap: 14px;
     }
-    .split .label .idx { opacity: .55; }
+    .split .label { font-size: clamp(15px, 1.35vw, 19px); letter-spacing: .12em; }
     h2.big {
       font-size: clamp(32px, 4.6vw, 72px);
       line-height: 1; letter-spacing: -.035em; font-weight: 700;
@@ -226,18 +225,17 @@
       border-top: 1px solid var(--line);
     }
     .services li {
-      display: grid; grid-template-columns: 64px minmax(0, 1fr) minmax(0, 1.5fr);
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
       gap: 12px 24px; align-items: baseline;
       padding: 28px 0; border-bottom: 1px solid var(--line);
     }
-    .services .num { font-family: var(--mono); font-size: 12px; letter-spacing: .07em; transition: color .25s; }
     .services h3 {
       font-size: clamp(22px, 2.1vw, 30px); font-weight: 700;
       letter-spacing: -.025em; line-height: 1.05;
       transition: transform .45s var(--ease), color .25s;
     }
     .services p { color: var(--muted); font-size: 16px; line-height: 1.5; max-width: 48ch; }
-    .services li:hover .num, .services li:hover h3 { color: var(--accent); }
+    .services li:hover h3 { color: var(--accent); }
     .services li:hover h3 { transform: translateX(8px); }
 
     /* ---------- the gambit ---------- */
@@ -256,7 +254,17 @@
     .gambit .copy + .copy { margin-top: 16px; }
     .gambit .copy strong { color: var(--white); font-weight: 500; }
     .board-wrap { width: 100%; max-width: 400px; margin-inline: auto; }
-    .board .co { font-family: var(--mono); font-size: 9px; fill: rgba(244, 244, 242, .45); }
+    .board .w { fill: var(--white); }
+    .board .b { fill: var(--accent); }
+    .board .pc {
+      transform-box: fill-box; transform-origin: center;
+      transition: transform .75s var(--ease), opacity .45s ease, scale .45s ease;
+    }
+    .board .pc.taken { opacity: 0; scale: .4; }
+    .board .pc.hop { animation: hop .75s var(--ease); }
+    @keyframes hop { 50% { scale: 1.32; } }
+    .board .hl rect { fill: rgba(244, 244, 242, .16); opacity: 0; transition: opacity .4s ease, x .75s var(--ease), y .75s var(--ease); }
+    .board.no-anim * { transition: none !important; animation: none !important; }
 
     /* ---------- contact ---------- */
     .contact { background: var(--accent); color: #fff; }
@@ -328,12 +336,10 @@
     }
 
     @media (max-width: 860px) {
-      .top .move { display: none; }
       .hero-foot { grid-template-columns: 1fr; gap: 28px; }
       .split { grid-template-columns: 1fr; gap: 24px; }
       .split .label { position: static; }
-      .services li { grid-template-columns: 44px minmax(0, 1fr); }
-      .services p { grid-column: 2; }
+      .services li { grid-template-columns: 1fr; gap: 8px; }
       .gambit .body, .contact .body { grid-template-columns: 1fr; }
       .board-wrap { margin-inline: 0; }
       .foot-bar { justify-content: flex-start; }
@@ -355,7 +361,6 @@
 
   <header class="top">
     <a class="brand" href="#top"><span class="mark" aria-hidden="true"></span>Gambit</a>
-    <span class="mono move" aria-hidden="true">1. d4 d5 2. c4</span>
     <a class="cta" href="#contact">Email us</a>
   </header>
 
@@ -397,29 +402,25 @@
 
     <section class="what pad" id="what" data-theme="light">
       <div class="split">
-        <div class="label mono"><span class="idx">(01)</span><span>What we do</span></div>
+        <div class="label mono"><span>What we do</span></div>
         <div class="body">
           <h2 class="big reveal">We run social for brands that would rather be talked about than scrolled past.</h2>
           <p class="lede reveal">Strategy, content and paid, handled by people who actually post. No forty-page decks and no buzzwords. A plan, the work, and numbers on your desk every Monday.</p>
 
           <ol class="services">
             <li class="reveal">
-              <span class="num">01</span>
               <h3>Strategy</h3>
               <p>Where you should be, what you should say, and why anyone would care. Built around your goals, not the algorithm of the week.</p>
             </li>
             <li class="reveal">
-              <span class="num">02</span>
               <h3>Content</h3>
               <p>Short-form video, stills, carousels, captions. Shot, cut and scheduled. Made to be watched twice, not skipped once.</p>
             </li>
             <li class="reveal">
-              <span class="num">03</span>
               <h3>Paid social</h3>
               <p>Meta, TikTok and LinkedIn campaigns with real budgets and honest reporting. We scale what works and kill what doesn't, fast.</p>
             </li>
             <li class="reveal">
-              <span class="num">04</span>
               <h3>Community</h3>
               <p>Comments, DMs, collabs, and the unglamorous work of turning followers into people who actually buy.</p>
             </li>
@@ -430,7 +431,7 @@
 
     <section class="gambit pad" data-theme="dark">
       <div class="split">
-        <div class="label mono"><span class="idx">(02)</span><span>Why Gambit</span></div>
+        <div class="label mono"><span>Why Gambit</span></div>
         <div class="body">
           <div>
             <p class="quote reveal">A gambit is when you give up a pawn <b>to take the centre of the board.</b></p>
@@ -438,95 +439,110 @@
             <p class="copy reveal"><strong>Calculated, not reckless.</strong> That's the whole idea.</p>
           </div>
           <div class="board-wrap reveal">
-            <svg class="board" viewBox="0 0 400 400" role="img" aria-label="Chessboard showing the Queen's Gambit: white pawns on d4 and c4, black pawn on d5">
-<defs><symbol id="pawn" viewBox="0 0 50 50"><circle cx="25" cy="15" r="6.5"/><path d="M20 22h10l4.5 12h-19z"/><rect x="14" y="36" width="22" height="4.5"/></symbol></defs>
-<rect x='0' y='0' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='50' y='0' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='100' y='0' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='150' y='0' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='200' y='0' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='250' y='0' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='300' y='0' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='350' y='0' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='0' y='50' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='50' y='50' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='100' y='50' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='150' y='50' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='200' y='50' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='250' y='50' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='300' y='50' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='350' y='50' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='0' y='100' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='50' y='100' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='100' y='100' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='150' y='100' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='200' y='100' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='250' y='100' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='300' y='100' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='350' y='100' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='0' y='150' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='50' y='150' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='100' y='150' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='150' y='150' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='200' y='150' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='250' y='150' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='300' y='150' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='350' y='150' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='0' y='200' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='50' y='200' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='100' y='200' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='150' y='200' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='200' y='200' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='250' y='200' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='300' y='200' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='350' y='200' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='0' y='250' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='50' y='250' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='100' y='250' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='150' y='250' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='200' y='250' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='250' y='250' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='300' y='250' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='350' y='250' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='0' y='300' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='50' y='300' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='100' y='300' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='150' y='300' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='200' y='300' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='250' y='300' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='300' y='300' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='350' y='300' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='0' y='350' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='50' y='350' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='100' y='350' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='150' y='350' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='200' y='350' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='250' y='350' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='300' y='350' width='50' height='50' fill='rgba(244,244,242,.025)'/>
-<rect x='350' y='350' width='50' height='50' fill='rgba(244,244,242,.11)'/>
-<rect x='100' y='200' width='50' height='50' fill='#52662c'/>
-<rect x='150' y='200' width='50' height='50' fill='#52662c'/>
-<rect x='150' y='150' width='50' height='50' fill='#f4f4f2'/>
-<use href='#pawn' x='100' y='200' width='50' height='50' fill='#f4f4f2'/>
-<use href='#pawn' x='150' y='200' width='50' height='50' fill='#f4f4f2'/>
-<use href='#pawn' x='150' y='150' width='50' height='50' fill='#0b0b0d'/>
-<text x='4' y='11' class='co'>8</text>
-<text x='4' y='61' class='co'>7</text>
-<text x='4' y='111' class='co'>6</text>
-<text x='4' y='161' class='co'>5</text>
-<text x='4' y='211' class='co'>4</text>
-<text x='4' y='261' class='co'>3</text>
-<text x='4' y='311' class='co'>2</text>
-<text x='4' y='361' class='co'>1</text>
-<text x='46' y='395' class='co' text-anchor='end'>a</text>
-<text x='96' y='395' class='co' text-anchor='end'>b</text>
-<text x='146' y='395' class='co' text-anchor='end'>c</text>
-<text x='196' y='395' class='co' text-anchor='end'>d</text>
-<text x='246' y='395' class='co' text-anchor='end'>e</text>
-<text x='296' y='395' class='co' text-anchor='end'>f</text>
-<text x='346' y='395' class='co' text-anchor='end'>g</text>
-<text x='396' y='395' class='co' text-anchor='end'>h</text>
-<rect x='.5' y='.5' width='399' height='399' fill='none' stroke='rgba(244,244,242,.25)'/>
+            <svg class="board" viewBox="0 0 400 400" role="img" aria-label="Chessboard playing the opening moves of the Queen's Gambit as you scroll">
+<defs><symbol id="pc-p" viewBox="0 0 50 50"><circle cx="25" cy="15" r="6.5"/><path d="M20 22h10l4.5 12h-19z"/><rect x="14" y="36" width="22" height="4.5"/></symbol><symbol id="pc-r" viewBox="0 0 50 50"><path d="M15 10h5v4h3.5v-4h3v4h3.5v-4h5v9h-2.5v14h2.5v3h-20v-3h2.5v-14h-2.5z"/><rect x="13" y="36" width="24" height="4.5"/></symbol><symbol id="pc-n" viewBox="0 0 50 50"><path d="M14 36C15 31 14.5 28 11.5 25.5 9.5 23.5 9 20.5 10.5 18.5 12.5 16.5 15.5 15.5 18.5 15L21.5 7.5 24.5 12.5C29 11 33 14 35 19.5 36.5 24.5 36.5 31 36 36Z"/><rect x="13" y="36" width="24" height="4.5"/></symbol><symbol id="pc-b" viewBox="0 0 50 50"><circle cx="25" cy="8.5" r="2.6"/><path d="M25 11C31 15 34 20 34 25 34 29 32 32 30 34H20C18 32 16 29 16 25 16 20 19 15 25 11Z"/><path d="M17 34h16l2 2.5h-20z"/><rect x="14" y="36.5" width="22" height="4"/></symbol><symbol id="pc-q" viewBox="0 0 50 50"><circle cx="16.5" cy="9" r="2.2"/><circle cx="25" cy="6.5" r="2.2"/><circle cx="33.5" cy="9" r="2.2"/><path d="M12 22 16.5 10 21 20 25 7.5 29 20 33.5 10 38 22 35 34H15Z"/><path d="M15 34h20l1.5 2.5h-23z"/><rect x="13" y="36.5" width="24" height="4"/></symbol><symbol id="pc-k" viewBox="0 0 50 50"><rect x="23.25" y="4" width="3.5" height="14"/><rect x="19.5" y="8" width="11" height="3.5"/><path d="M13 22Q25 13 37 22L35 34H15Z"/><path d="M15 34h20l1.5 2.5h-23z"/><rect x="13" y="36.5" width="24" height="4"/></symbol></defs>
+<g class="squares">
+<rect x='0' y='0' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='50' y='0' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='100' y='0' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='150' y='0' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='200' y='0' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='250' y='0' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='300' y='0' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='350' y='0' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='0' y='50' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='50' y='50' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='100' y='50' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='150' y='50' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='200' y='50' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='250' y='50' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='300' y='50' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='350' y='50' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='0' y='100' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='50' y='100' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='100' y='100' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='150' y='100' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='200' y='100' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='250' y='100' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='300' y='100' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='350' y='100' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='0' y='150' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='50' y='150' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='100' y='150' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='150' y='150' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='200' y='150' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='250' y='150' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='300' y='150' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='350' y='150' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='0' y='200' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='50' y='200' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='100' y='200' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='150' y='200' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='200' y='200' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='250' y='200' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='300' y='200' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='350' y='200' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='0' y='250' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='50' y='250' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='100' y='250' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='150' y='250' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='200' y='250' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='250' y='250' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='300' y='250' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='350' y='250' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='0' y='300' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='50' y='300' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='100' y='300' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='150' y='300' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='200' y='300' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='250' y='300' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='300' y='300' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='350' y='300' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='0' y='350' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='50' y='350' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='100' y='350' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='150' y='350' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='200' y='350' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='250' y='350' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+<rect x='300' y='350' width='50' height='50' fill='rgba(244,244,242,.045)'/>
+<rect x='350' y='350' width='50' height='50' fill='rgba(244,244,242,.13)'/>
+</g>
+<g class="hl"><rect class="hl-from" width="50" height="50"/><rect class="hl-to" width="50" height="50"/></g>
+<g class="pieces">
+<use href="#pc-r" class="pc w" data-sq="a1" width="50" height="50" transform="translate(0 350)"/>
+<use href="#pc-p" class="pc w" data-sq="a2" width="50" height="50" transform="translate(0 300)"/>
+<use href="#pc-r" class="pc b" data-sq="a8" width="50" height="50" transform="translate(0 0)"/>
+<use href="#pc-p" class="pc b" data-sq="a7" width="50" height="50" transform="translate(0 50)"/>
+<use href="#pc-n" class="pc w" data-sq="b1" width="50" height="50" transform="translate(50 350)"/>
+<use href="#pc-p" class="pc w" data-sq="b2" width="50" height="50" transform="translate(50 300)"/>
+<use href="#pc-n" class="pc b" data-sq="b8" width="50" height="50" transform="translate(50 0)"/>
+<use href="#pc-p" class="pc b" data-sq="b7" width="50" height="50" transform="translate(50 50)"/>
+<use href="#pc-b" class="pc w" data-sq="c1" width="50" height="50" transform="translate(100 350)"/>
+<use href="#pc-p" class="pc w" data-sq="c2" width="50" height="50" transform="translate(100 300)"/>
+<use href="#pc-b" class="pc b" data-sq="c8" width="50" height="50" transform="translate(100 0)"/>
+<use href="#pc-p" class="pc b" data-sq="c7" width="50" height="50" transform="translate(100 50)"/>
+<use href="#pc-q" class="pc w" data-sq="d1" width="50" height="50" transform="translate(150 350)"/>
+<use href="#pc-p" class="pc w" data-sq="d2" width="50" height="50" transform="translate(150 300)"/>
+<use href="#pc-q" class="pc b" data-sq="d8" width="50" height="50" transform="translate(150 0)"/>
+<use href="#pc-p" class="pc b" data-sq="d7" width="50" height="50" transform="translate(150 50)"/>
+<use href="#pc-k" class="pc w" data-sq="e1" width="50" height="50" transform="translate(200 350)"/>
+<use href="#pc-p" class="pc w" data-sq="e2" width="50" height="50" transform="translate(200 300)"/>
+<use href="#pc-k" class="pc b" data-sq="e8" width="50" height="50" transform="translate(200 0)"/>
+<use href="#pc-p" class="pc b" data-sq="e7" width="50" height="50" transform="translate(200 50)"/>
+<use href="#pc-b" class="pc w" data-sq="f1" width="50" height="50" transform="translate(250 350)"/>
+<use href="#pc-p" class="pc w" data-sq="f2" width="50" height="50" transform="translate(250 300)"/>
+<use href="#pc-b" class="pc b" data-sq="f8" width="50" height="50" transform="translate(250 0)"/>
+<use href="#pc-p" class="pc b" data-sq="f7" width="50" height="50" transform="translate(250 50)"/>
+<use href="#pc-n" class="pc w" data-sq="g1" width="50" height="50" transform="translate(300 350)"/>
+<use href="#pc-p" class="pc w" data-sq="g2" width="50" height="50" transform="translate(300 300)"/>
+<use href="#pc-n" class="pc b" data-sq="g8" width="50" height="50" transform="translate(300 0)"/>
+<use href="#pc-p" class="pc b" data-sq="g7" width="50" height="50" transform="translate(300 50)"/>
+<use href="#pc-r" class="pc w" data-sq="h1" width="50" height="50" transform="translate(350 350)"/>
+<use href="#pc-p" class="pc w" data-sq="h2" width="50" height="50" transform="translate(350 300)"/>
+<use href="#pc-r" class="pc b" data-sq="h8" width="50" height="50" transform="translate(350 0)"/>
+<use href="#pc-p" class="pc b" data-sq="h7" width="50" height="50" transform="translate(350 50)"/>
+</g>
+<rect x='.5' y='.5' width='399' height='399' fill='none' stroke='rgba(244,244,242,.22)'/>
 </svg>
           </div>
         </div>
@@ -535,7 +551,7 @@
 
     <section class="contact pad" id="contact" data-theme="accent">
       <div class="split">
-        <div class="label mono"><span class="idx">(03)</span><span>Contact</span></div>
+        <div class="label mono"><span>Contact</span></div>
         <div class="body">
           <div>
             <h2 class="reveal">Make your move.</h2>
@@ -618,6 +634,57 @@
     });
 
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // The board plays the Queen's Gambit Accepted as you scroll past it, and rewinds if you scroll back.
+    (() => {
+      const svg = document.querySelector('.board'); if (!svg) return;
+      const SQ = 50;
+      const xy = (sq) => [(sq.charCodeAt(0) - 97) * SQ, (8 - +sq[1]) * SQ];
+      const at = {};
+      svg.querySelectorAll('.pc').forEach((el) => { at[el.dataset.sq] = el; });
+      const place = (el, sq) => { const [x, y] = xy(sq); el.style.transform = `translate(${x}px, ${y}px)`; };
+      const hl = [svg.querySelector('.hl-from'), svg.querySelector('.hl-to')];
+      const highlight = (m) => {
+        if (!m) { hl.forEach((r) => { r.style.opacity = 0; }); return; }
+        [m.from, m.to].forEach((sq, i) => { const [x, y] = xy(sq); hl[i].setAttribute('x', x); hl[i].setAttribute('y', y); hl[i].style.x = x + 'px'; hl[i].style.y = y + 'px'; hl[i].style.opacity = 1; });
+      };
+      const MOVES = [
+        { from: 'd2', to: 'd4' },
+        { from: 'd7', to: 'd5' },
+        { from: 'c2', to: 'c4' },
+        { from: 'd5', to: 'c4' },
+        { from: 'g1', to: 'f3', hop: true },
+        { from: 'g8', to: 'f6', hop: true },
+        { from: 'e2', to: 'e4' },
+      ];
+      let done = 0;
+      const apply = () => {
+        const m = MOVES[done]; const el = at[m.from]; const victim = at[m.to];
+        if (victim) { victim.classList.add('taken'); m.captured = victim; }
+        place(el, m.to); delete at[m.from]; at[m.to] = el;
+        if (m.hop) { el.classList.remove('hop'); void el.getBoundingClientRect(); el.classList.add('hop'); }
+        highlight(m); done++;
+      };
+      const undo = () => {
+        done--; const m = MOVES[done]; const el = at[m.to];
+        place(el, m.from); at[m.from] = el; delete at[m.to];
+        if (m.captured) { m.captured.classList.remove('taken'); at[m.to] = m.captured; m.captured = null; }
+        highlight(MOVES[done - 1]);
+      };
+      const START = 0.2, STEP = 0.075;
+      const sync = () => {
+        const r = svg.getBoundingClientRect(); const vh = innerHeight;
+        const p = (vh - r.top) / (vh + r.height);
+        const k = p < START ? 0 : Math.min(MOVES.length, Math.floor((p - START) / STEP) + 1);
+        while (done < k) apply();
+        while (done > k) undo();
+      };
+      svg.classList.add('no-anim'); sync(); void svg.getBoundingClientRect();
+      requestAnimationFrame(() => requestAnimationFrame(() => svg.classList.remove('no-anim')));
+      let waiting = false;
+      addEventListener('scroll', () => { if (!waiting) { waiting = true; requestAnimationFrame(() => { waiting = false; sync(); }); } }, { passive: true });
+      addEventListener('resize', sync);
+    })();
   </script>
 </body>
 </html>
