@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gambit Marketing</title>
+  <meta name="description" content="Gambit Marketing. Calculated moves, meaningful risks. Social media strategy, content and paid social for brands that would rather be talked about than scrolled past.">
+  <meta name="theme-color" content="#0b0b0d">
+  <meta property="og:title" content="Gambit Marketing">
+  <meta property="og:description" content="Calculated moves. Meaningful risks. Your social media experts.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230b0b0d'/%3E%3Crect width='8' height='8' fill='%231f3dff'/%3E%3Crect x='8' y='8' width='8' height='8' fill='%231f3dff'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Fraunces:ital,opsz,wght@1,9..144,300..700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #0b0b0d;
+      --white: #f4f4f2;
+      --blue: #1f3dff;
+      --blue-on-dark: #4d67ff;
+      --line: rgba(11, 11, 13, .14);
+      --line-inv: rgba(244, 244, 242, .16);
+      --muted: rgba(11, 11, 13, .68);
+      --muted-inv: rgba(244, 244, 242, .68);
+      --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+      --sans: "Archivo", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+      --serif: "Fraunces", Georgia, "Times New Roman", serif;
+      --gutter: clamp(16px, 4vw, 56px);
+      --ease: cubic-bezier(.16, 1, .3, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
+    }
+    ::selection { background: var(--blue); color: #fff; }
+    a { color: inherit; }
+    svg { display: block; max-width: 100%; }
+    h1, h2, h3, p, ul, ol { margin: 0; }
+    button, input, textarea { font: inherit; color: inherit; }
+    :focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+
+    .mono {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+    .sq {
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: var(--blue);
+      vertical-align: middle;
+      margin-right: 10px;
+      position: relative; top: -1px;
+    }
+    .skip {
+      position: absolute; left: var(--gutter); top: -60px;
+      background: var(--white); color: var(--black);
+      padding: 10px 14px; z-index: 50; text-decoration: none;
+    }
+    .skip:focus { top: 12px; }
+
+    /* ---------- header ---------- */
+    .top {
+      position: fixed; inset: 0 0 auto 0; z-index: 20;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      padding-inline: var(--gutter);
+      color: var(--white);
+      transition: color .35s;
+    }
+    body[data-theme="light"] .top { color: var(--black); }
+    .top .brand {
+      font-weight: 900; font-stretch: 118%;
+      font-size: 17px; letter-spacing: -.01em; text-transform: uppercase;
+      text-decoration: none;
+    }
+    .top .move { opacity: .7; }
+    .top .cta {
+      font-family: var(--mono); font-size: 12px; letter-spacing: .07em; text-transform: uppercase;
+      text-decoration: none;
+      border-bottom: 1px solid currentColor; padding-bottom: 3px;
+    }
+    .top .cta:hover { border-bottom-color: var(--blue); color: inherit; }
+    body[data-theme="blue"] .top .cta:hover { border-bottom-color: #fff; opacity: .8; }
+
+    /* ---------- hero ---------- */
+    .hero {
+      min-height: 100vh; min-height: 100svh;
+      display: flex; flex-direction: column;
+      padding: 96px var(--gutter) 0;
+    }
+    .hero-meta {
+      display: flex; justify-content: space-between; gap: 16px;
+      margin-bottom: auto; padding-bottom: 48px;
+      color: var(--muted-inv);
+    }
+    .wordmark {
+      --wm: clamp(38px, 12.4vw, 250px);
+      font-size: var(--wm);
+      font-weight: 900; font-stretch: 112%;
+      text-transform: uppercase;
+      letter-spacing: -.035em;
+      line-height: .86;
+      display: block;
+    }
+    .wordmark .row { display: flex; align-items: stretch; gap: .1em; }
+    .wordmark .word {
+      display: block; overflow: hidden;
+      padding: .08em .05em; margin: -.08em -.05em;
+    }
+    .wordmark .word > span { display: block; }
+    .js .wordmark .word > span {
+      transform: translateY(120%);
+      animation: rise 1.2s var(--ease) calc(var(--i) * .13s + .1s) forwards;
+    }
+    .wordmark .block {
+      flex: 1 1 0; min-width: 0;
+      background: var(--blue);
+      margin: .07em 0 .01em;
+      transform-origin: left center;
+    }
+    .js .wordmark .block { transform: scaleX(0); animation: grow 1.3s var(--ease) .45s forwards; }
+    @keyframes rise { to { transform: none; } }
+    @keyframes grow { to { transform: none; } }
+
+    .hero-foot {
+      display: grid; grid-template-columns: 1.35fr 1fr;
+      gap: 32px var(--gutter); align-items: end;
+      margin-top: clamp(32px, 5vw, 64px);
+      padding: 36px 0 44px;
+      border-top: 1px solid var(--line-inv);
+    }
+    .tagline {
+      font-size: clamp(28px, 3.7vw, 56px);
+      line-height: 1.02; letter-spacing: -.025em; font-weight: 500;
+      text-wrap: balance;
+    }
+    .tagline em {
+      font-family: var(--serif); font-style: italic; font-weight: 400;
+      color: var(--blue-on-dark);
+      letter-spacing: -.01em;
+    }
+    .hero-aside { display: flex; flex-direction: column; gap: 24px; align-items: flex-start; }
+    .sub { font-size: 18px; line-height: 1.45; color: var(--muted-inv); max-width: 36ch; }
+    .sub strong { color: var(--white); font-weight: 600; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 14px;
+      padding: 16px 22px;
+      background: var(--white); color: var(--black);
+      border: 1px solid var(--white);
+      text-decoration: none; font-weight: 600; letter-spacing: -.01em;
+      transition: background .25s, color .25s;
+    }
+    .btn svg { width: 14px; height: 14px; transition: transform .35s var(--ease); }
+    .btn:hover { background: transparent; color: var(--white); }
+    .btn:hover svg { transform: translate(3px, -3px); }
+
+    /* ---------- ticker ---------- */
+    .ticker {
+      border-top: 1px solid var(--line-inv);
+      border-bottom: 1px solid var(--line-inv);
+      overflow: hidden; white-space: nowrap;
+      padding: 15px 0;
+      font-family: var(--mono); font-size: 12px; letter-spacing: .09em; text-transform: uppercase;
+    }
+    .ticker .track { display: inline-flex; animation: ticker 46s linear infinite; }
+    .ticker:hover .track { animation-play-state: paused; }
+    .ticker span { padding: 0 24px; display: inline-flex; align-items: center; }
+    .ticker span::before {
+      content: ""; width: 8px; height: 8px; background: var(--blue); margin-right: 24px;
+    }
+    @keyframes ticker { to { transform: translateX(-50%); } }
+
+    /* ---------- shared section layout ---------- */
+    section.pad { padding: clamp(72px, 10vw, 140px) var(--gutter); }
+    .split {
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
+      gap: 32px var(--gutter);
+    }
+    .split .label {
+      position: sticky; top: 88px; align-self: start;
+      display: flex; gap: 14px;
+    }
+    .split .label .idx { opacity: .55; }
+    h2.big {
+      font-size: clamp(32px, 4.6vw, 72px);
+      line-height: 1; letter-spacing: -.035em; font-weight: 700;
+      text-wrap: balance; max-width: 17ch;
+    }
+    .lede {
+      font-size: clamp(18px, 1.5vw, 21px); line-height: 1.45;
+      max-width: 50ch; margin-top: 28px;
+    }
+
+    /* ---------- what we do ---------- */
+    .what { background: var(--white); color: var(--black); }
+    .what .lede { color: var(--muted); }
+    .services {
+      list-style: none; padding: 0; margin: 56px 0 0;
+      border-top: 1px solid var(--line);
+    }
+    .services li {
+      display: grid; grid-template-columns: 64px minmax(0, 1fr) minmax(0, 1.5fr);
+      gap: 12px 24px; align-items: baseline;
+      padding: 28px 0; border-bottom: 1px solid var(--line);
+    }
+    .services .num { font-family: var(--mono); font-size: 12px; letter-spacing: .07em; transition: color .25s; }
+    .services h3 {
+      font-size: clamp(22px, 2.1vw, 30px); font-weight: 700;
+      letter-spacing: -.025em; line-height: 1.05;
+      transition: transform .45s var(--ease), color .25s;
+    }
+    .services p { color: var(--muted); font-size: 16px; line-height: 1.5; max-width: 48ch; }
+    .services li:hover .num, .services li:hover h3 { color: var(--blue); }
+    .services li:hover h3 { transform: translateX(8px); }
+
+    /* ---------- the gambit ---------- */
+    .gambit { background: var(--black); color: var(--white); }
+    .gambit .body {
+      display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: 48px var(--gutter); align-items: center;
+    }
+    .quote {
+      font-family: var(--serif); font-style: italic; font-weight: 400;
+      font-size: clamp(30px, 3.6vw, 56px); line-height: 1.08; letter-spacing: -.01em;
+      text-wrap: balance;
+    }
+    .quote b { font-weight: 400; color: var(--blue-on-dark); }
+    .gambit .copy { margin-top: 30px; color: var(--muted-inv); max-width: 46ch; }
+    .gambit .copy + .copy { margin-top: 16px; }
+    .gambit .copy strong { color: var(--white); font-weight: 500; }
+    .board-wrap { width: 100%; max-width: 400px; margin-inline: auto; }
+    .board .co { font-family: var(--mono); font-size: 9px; fill: rgba(244, 244, 242, .45); }
+    .board-cap {
+      display: flex; justify-content: space-between; gap: 16px;
+      margin-top: 14px; color: var(--muted-inv);
+    }
+
+    /* ---------- contact ---------- */
+    .contact { background: var(--blue); color: #fff; }
+    .contact ::selection { background: var(--black); color: #fff; }
+    .contact .body {
+      display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 48px var(--gutter);
+    }
+    .contact h2 {
+      font-size: clamp(52px, 8.5vw, 136px);
+      line-height: .9; letter-spacing: -.04em;
+      font-weight: 900; font-stretch: 108%; text-transform: uppercase;
+    }
+    .contact .lede { color: rgba(255, 255, 255, .8); max-width: 40ch; }
+    .email {
+      display: inline-block; margin-top: 36px;
+      font-size: clamp(18px, 2vw, 26px); font-weight: 600; letter-spacing: -.02em;
+      text-decoration: none; border-bottom: 2px solid currentColor; padding-bottom: 4px;
+      word-break: break-all;
+    }
+    .email:hover { border-bottom-color: var(--black); }
+    .form { display: grid; gap: 30px; align-content: start; }
+    .field { display: grid; gap: 10px; }
+    .field label {
+      font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+      opacity: .85;
+    }
+    .field input, .field textarea {
+      width: 100%; background: transparent; border: 0; border-radius: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, .45);
+      padding: 8px 0 12px; font-size: 19px;
+      transition: border-color .2s;
+    }
+    .field input:focus, .field textarea:focus { outline: none; border-bottom-color: #fff; }
+    .field textarea { min-height: 110px; resize: vertical; }
+    .field ::placeholder { color: rgba(255, 255, 255, .5); }
+    .send {
+      justify-self: start;
+      display: inline-flex; align-items: center; gap: 14px;
+      background: #fff; color: var(--blue); border: 1px solid #fff;
+      padding: 18px 26px; font-weight: 700; cursor: pointer;
+      transition: background .25s, color .25s;
+    }
+    .send svg { width: 14px; height: 14px; transition: transform .35s var(--ease); }
+    .send:hover { background: transparent; color: #fff; }
+    .send:hover svg { transform: translate(3px, -3px); }
+    .note { font-family: var(--mono); font-size: 11px; letter-spacing: .07em; text-transform: uppercase; opacity: .75; margin-top: -10px; }
+
+    /* ---------- footer ---------- */
+    .foot {
+      background: var(--black); color: var(--white);
+      padding: 34px var(--gutter);
+      display: flex; flex-wrap: wrap; gap: 16px 40px;
+      justify-content: space-between; align-items: center;
+      font-family: var(--mono); font-size: 12px; letter-spacing: .07em; text-transform: uppercase;
+    }
+    .foot ul { list-style: none; padding: 0; display: flex; gap: 24px; flex-wrap: wrap; }
+    .foot a { text-decoration: none; opacity: .7; transition: opacity .2s; }
+    .foot a:hover { opacity: 1; }
+
+    /* ---------- reveal + misc ---------- */
+    .js .reveal { opacity: 0; transform: translateY(22px); transition: opacity .9s ease, transform 1s var(--ease); }
+    .js .reveal.in { opacity: 1; transform: none; }
+    .grain {
+      position: fixed; inset: 0; z-index: 30; pointer-events: none; opacity: .05;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 220px 220px;
+    }
+
+    @media (max-width: 860px) {
+      .top .move { display: none; }
+      .hero-foot { grid-template-columns: 1fr; gap: 28px; }
+      .split { grid-template-columns: 1fr; gap: 24px; }
+      .split .label { position: static; }
+      .services li { grid-template-columns: 44px minmax(0, 1fr); }
+      .services p { grid-column: 2; }
+      .gambit .body, .contact .body { grid-template-columns: 1fr; }
+      .board-wrap { margin-inline: 0; }
+      .foot { justify-content: flex-start; }
+    }
+    @media (max-width: 480px) {
+      .hero-meta { flex-direction: column; gap: 8px; }
+      .wordmark { --wm: clamp(38px, 12.6vw, 250px); letter-spacing: -.045em; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .js .wordmark .word > span, .js .wordmark .block { transform: none; }
+      .js .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body data-theme="dark">
+  <a class="skip" href="#what">Skip to content</a>
+
+  <header class="top">
+    <a class="brand" href="#top">Gambit</a>
+    <span class="mono move" aria-hidden="true">1. d4 d5 2. c4</span>
+    <a class="cta" href="#contact">Email us</a>
+  </header>
+
+  <main id="top">
+    <section class="hero" data-theme="dark">
+      <div class="hero-meta mono">
+        <span><i class="sq"></i>Social media agency</span>
+        <span>Now taking new clients</span>
+      </div>
+
+      <h1 class="wordmark" aria-label="Gambit Marketing">
+        <span class="row">
+          <span class="word"><span style="--i:0">Gambit</span></span>
+          <span class="block" aria-hidden="true"></span>
+        </span>
+        <span class="row">
+          <span class="word"><span style="--i:1">Marketing</span></span>
+        </span>
+      </h1>
+
+      <div class="hero-foot">
+        <p class="tagline">Calculated moves. <em>Meaningful risks.</em></p>
+        <div class="hero-aside">
+          <p class="sub"><strong>Your social media experts.</strong> Strategy, content and paid social for brands that would rather be talked about than scrolled past.</p>
+          <a class="btn" href="#contact">
+            Contact us now
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 12 12 2M4 2h8v8"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="ticker" aria-hidden="true">
+        <div class="track">
+          <span>Social strategy</span><span>Content production</span><span>Paid social</span><span>Community</span><span>Creative direction</span><span>Reporting you can actually read</span>
+          <span>Social strategy</span><span>Content production</span><span>Paid social</span><span>Community</span><span>Creative direction</span><span>Reporting you can actually read</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="what pad" id="what" data-theme="light">
+      <div class="split">
+        <div class="label mono"><span class="idx">(01)</span><span>What we do</span></div>
+        <div class="body">
+          <h2 class="big reveal">We run social for brands that would rather be talked about than scrolled past.</h2>
+          <p class="lede reveal">Strategy, content and paid, handled by people who actually post. No forty-page decks and no buzzwords. A plan, the work, and numbers on your desk every Monday.</p>
+
+          <ol class="services">
+            <li class="reveal">
+              <span class="num">01</span>
+              <h3>Strategy</h3>
+              <p>Where you should be, what you should say, and why anyone would care. Built around your goals, not the algorithm of the week.</p>
+            </li>
+            <li class="reveal">
+              <span class="num">02</span>
+              <h3>Content</h3>
+              <p>Short-form video, stills, carousels, captions. Shot, cut and scheduled. Made to be watched twice, not skipped once.</p>
+            </li>
+            <li class="reveal">
+              <span class="num">03</span>
+              <h3>Paid social</h3>
+              <p>Meta, TikTok and LinkedIn campaigns with real budgets and honest reporting. We scale what works and kill what doesn't, fast.</p>
+            </li>
+            <li class="reveal">
+              <span class="num">04</span>
+              <h3>Community</h3>
+              <p>Comments, DMs, collabs, and the unglamorous work of turning followers into people who actually buy.</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="gambit pad" data-theme="dark">
+      <div class="split">
+        <div class="label mono"><span class="idx">(02)</span><span>Why Gambit</span></div>
+        <div class="body">
+          <div>
+            <p class="quote reveal">A gambit is when you give up a pawn <b>to take the centre of the board.</b></p>
+            <p class="copy reveal">Most brands play not to lose. Same post, same time, same nothing. We'd rather make the move that gets a reaction, measure it, and make the next one smarter.</p>
+            <p class="copy reveal"><strong>Calculated, not reckless.</strong> That's the whole idea.</p>
+          </div>
+          <div class="board-wrap reveal">
+            <svg class="board" viewBox="0 0 400 400" role="img" aria-label="Chessboard showing the Queen's Gambit: white pawns on d4 and c4, black pawn on d5">
+<defs><symbol id="pawn" viewBox="0 0 50 50"><circle cx="25" cy="15" r="6.5"/><path d="M20 22h10l4.5 12h-19z"/><rect x="14" y="36" width="22" height="4.5"/></symbol></defs>
+<rect x='0' y='0' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='50' y='0' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='100' y='0' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='150' y='0' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='200' y='0' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='250' y='0' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='300' y='0' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='350' y='0' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='0' y='50' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='50' y='50' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='100' y='50' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='150' y='50' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='200' y='50' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='250' y='50' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='300' y='50' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='350' y='50' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='0' y='100' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='50' y='100' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='100' y='100' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='150' y='100' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='200' y='100' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='250' y='100' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='300' y='100' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='350' y='100' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='0' y='150' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='50' y='150' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='100' y='150' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='150' y='150' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='200' y='150' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='250' y='150' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='300' y='150' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='350' y='150' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='0' y='200' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='50' y='200' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='100' y='200' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='150' y='200' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='200' y='200' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='250' y='200' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='300' y='200' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='350' y='200' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='0' y='250' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='50' y='250' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='100' y='250' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='150' y='250' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='200' y='250' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='250' y='250' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='300' y='250' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='350' y='250' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='0' y='300' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='50' y='300' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='100' y='300' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='150' y='300' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='200' y='300' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='250' y='300' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='300' y='300' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='350' y='300' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='0' y='350' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='50' y='350' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='100' y='350' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='150' y='350' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='200' y='350' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='250' y='350' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='300' y='350' width='50' height='50' fill='rgba(244,244,242,.025)'/>
+<rect x='350' y='350' width='50' height='50' fill='rgba(244,244,242,.11)'/>
+<rect x='100' y='200' width='50' height='50' fill='#1f3dff'/>
+<rect x='150' y='200' width='50' height='50' fill='#1f3dff'/>
+<rect x='150' y='150' width='50' height='50' fill='#f4f4f2'/>
+<use href='#pawn' x='100' y='200' width='50' height='50' fill='#f4f4f2'/>
+<use href='#pawn' x='150' y='200' width='50' height='50' fill='#f4f4f2'/>
+<use href='#pawn' x='150' y='150' width='50' height='50' fill='#0b0b0d'/>
+<text x='4' y='11' class='co'>8</text>
+<text x='4' y='61' class='co'>7</text>
+<text x='4' y='111' class='co'>6</text>
+<text x='4' y='161' class='co'>5</text>
+<text x='4' y='211' class='co'>4</text>
+<text x='4' y='261' class='co'>3</text>
+<text x='4' y='311' class='co'>2</text>
+<text x='4' y='361' class='co'>1</text>
+<text x='46' y='395' class='co' text-anchor='end'>a</text>
+<text x='96' y='395' class='co' text-anchor='end'>b</text>
+<text x='146' y='395' class='co' text-anchor='end'>c</text>
+<text x='196' y='395' class='co' text-anchor='end'>d</text>
+<text x='246' y='395' class='co' text-anchor='end'>e</text>
+<text x='296' y='395' class='co' text-anchor='end'>f</text>
+<text x='346' y='395' class='co' text-anchor='end'>g</text>
+<text x='396' y='395' class='co' text-anchor='end'>h</text>
+<rect x='.5' y='.5' width='399' height='399' fill='none' stroke='rgba(244,244,242,.25)'/>
+</svg>
+            <div class="board-cap mono">
+              <span>Fig. 1 Queen's Gambit</span>
+              <span>1. d4 d5 2. c4</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact pad" id="contact" data-theme="blue">
+      <div class="split">
+        <div class="label mono"><span class="idx">(03)</span><span>Contact</span></div>
+        <div class="body">
+          <div>
+            <h2 class="reveal">Make your move.</h2>
+            <p class="lede reveal">Tell us what you're working on. You'll hear back within one working day with an honest take and a rough plan.</p>
+            <a class="email reveal" href="mailto:hello@gambitmarketing.com">hello@gambitmarketing.com</a>
+          </div>
+          <form class="form reveal" id="form" action="mailto:hello@gambitmarketing.com" method="post" enctype="text/plain">
+            <div class="field">
+              <label for="f-name">Name</label>
+              <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Your name" required>
+            </div>
+            <div class="field">
+              <label for="f-email">Email</label>
+              <input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required>
+            </div>
+            <div class="field">
+              <label for="f-msg">Message</label>
+              <textarea id="f-msg" name="message" placeholder="What are you working on?" required></textarea>
+            </div>
+            <button class="send" type="submit">
+              Send it
+              <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 12 12 2M4 2h8v8"/></svg>
+            </button>
+            <p class="note">Opens in your mail app.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>&copy; <span id="year">2026</span> Gambit Marketing</span>
+    <ul>
+      <li><a href="#" rel="me">Instagram</a></li>
+      <li><a href="#" rel="me">TikTok</a></li>
+      <li><a href="#" rel="me">LinkedIn</a></li>
+    </ul>
+    <a href="#top">Back to top</a>
+  </footer>
+
+  <div class="grain" aria-hidden="true"></div>
+
+  <script>
+    document.documentElement.classList.replace('no-js', 'js');
+
+    // Header colour follows whichever section is under it.
+    const sections = Array.from(document.querySelectorAll('[data-theme]'));
+    let ticking = false;
+    function setTheme() {
+      ticking = false;
+      const y = 32;
+      for (const s of sections) {
+        const r = s.getBoundingClientRect();
+        if (r.top <= y && r.bottom > y) { document.body.dataset.theme = s.dataset.theme; return; }
+      }
+    }
+    addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(setTheme); } }, { passive: true });
+    setTheme();
+
+    // Reveal on scroll.
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: .12, rootMargin: '0px 0px -6% 0px' });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+    // Contact form: hands off to the visitor's mail app with everything pre-filled.
+    const form = document.getElementById('form');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const to = form.getAttribute('action').replace(/^mailto:/, '');
+      const d = new FormData(form);
+      const name = (d.get('name') || '').trim();
+      const email = (d.get('email') || '').trim();
+      const msg = (d.get('message') || '').trim();
+      const subject = encodeURIComponent(`New project from ${name || 'the website'}`);
+      const body = encodeURIComponent(`${msg}\n\n${name}\n${email}`);
+      location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
