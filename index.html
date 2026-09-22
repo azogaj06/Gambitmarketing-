@@ -57,14 +57,6 @@
       letter-spacing: .07em;
       text-transform: uppercase;
     }
-    .sq {
-      display: inline-block;
-      width: 8px; height: 8px;
-      background: var(--accent);
-      vertical-align: middle;
-      margin-right: 10px;
-      position: relative; top: -1px;
-    }
     .skip {
       position: absolute; left: var(--gutter); top: -60px;
       background: var(--white); color: var(--black);
@@ -196,7 +188,7 @@
     .ticker:hover .track { animation-play-state: paused; }
     .ticker span { padding: 0 24px; display: inline-flex; align-items: center; }
     .ticker span::before {
-      content: ""; width: 8px; height: 8px; background: var(--accent); margin-right: 24px;
+      content: ""; width: 1px; height: 12px; background: rgba(244, 244, 242, .3); margin-right: 24px;
     }
     @keyframes ticker { to { transform: translateX(-50%); } }
 
@@ -370,7 +362,7 @@
   <main id="top">
     <section class="hero" data-theme="dark">
       <div class="hero-meta mono">
-        <span><i class="sq"></i>Social media agency</span>
+        <span>Social media agency</span>
         <span>Now taking new clients</span>
       </div>
 
