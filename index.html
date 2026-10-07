@@ -236,6 +236,58 @@
     .services li:hover h3 { color: var(--accent); }
     .services li:hover h3 { transform: translateX(8px); }
 
+    /* ---------- problem / changes / proof ---------- */
+    .hero-meta .ig { text-decoration: none; }
+    .hero-meta .ig:hover { color: var(--white); }
+    .problem { background: var(--accent); color: #fff; }
+    .problem ::selection { background: var(--black); color: #fff; }
+    .problem .lede { color: rgba(255, 255, 255, .82); }
+    .changes { background: var(--black); color: var(--white); }
+    .changes .lede { color: var(--muted-inv); }
+    .trio {
+      list-style: none; padding: 0; margin: 52px 0 0;
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 32px var(--gutter);
+    }
+    .trio li { border-top: 1px solid color-mix(in srgb, currentColor 32%, transparent); padding-top: 18px; }
+    .trio h3 {
+      font-size: clamp(20px, 1.8vw, 26px); font-weight: 700;
+      letter-spacing: -.02em; line-height: 1.1; text-wrap: balance;
+    }
+    .trio p { margin-top: 10px; opacity: .78; font-size: 16px; line-height: 1.5; }
+    .proof { background: var(--white); color: var(--black); }
+    .proof .lede { color: var(--muted); }
+    .clips {
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px; margin-top: 48px;
+    }
+    .clip {
+      position: relative; display: block; aspect-ratio: 9 / 16;
+      background: var(--black); color: var(--white); overflow: hidden; text-decoration: none;
+    }
+    .clip video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .clip .fallback {
+      position: absolute; inset: 0; padding: 18px;
+      display: flex; flex-direction: column; justify-content: flex-end; gap: 12px;
+      background: linear-gradient(180deg, rgba(244,244,242,.04), rgba(244,244,242,0) 40%);
+      opacity: 0; transition: opacity .3s;
+    }
+    .clip.missing .fallback, .clip:hover .fallback { opacity: 1; }
+    .clip:hover .fallback { background: linear-gradient(0deg, rgba(11,11,13,.75), rgba(11,11,13,0) 55%); }
+    .clip .fallback .mark { height: 34px; }
+    .clip .fallback span:last-child { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+    .proof .more {
+      display: inline-flex; align-items: center; gap: 12px; margin-top: 32px;
+      font-weight: 600; letter-spacing: -.01em; text-decoration: none;
+      border-bottom: 2px solid currentColor; padding-bottom: 4px;
+    }
+    .proof .more svg { width: 14px; height: 14px; transition: transform .35s var(--ease); }
+    .proof .more:hover { color: var(--accent); }
+    .proof .more:hover svg { transform: translate(3px, -3px); }
+    .contact .alt { margin-top: 18px; opacity: .85; }
+    .contact .alt a { text-decoration: none; border-bottom: 1px solid currentColor; }
+    .foot-bar a.plain { text-transform: none; letter-spacing: 0; }
+
     /* ---------- the gambit ---------- */
     .gambit { background: var(--black); color: var(--white); }
     .gambit .body {
@@ -338,6 +390,8 @@
       .split .label { position: static; }
       .services li { grid-template-columns: 1fr; gap: 8px; }
       .gambit .body, .contact .body { grid-template-columns: 1fr; }
+      .trio { grid-template-columns: 1fr; gap: 24px; }
+      .clips { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
       .board-wrap { margin-inline: 0; }
       .foot-bar { justify-content: flex-start; }
     }
@@ -365,7 +419,7 @@
     <section class="hero" data-theme="dark">
       <div class="hero-meta mono">
         <span>Social media agency</span>
-        <span>Now taking new clients</span>
+        <a class="ig" href="https://www.instagram.com/shotbygambit/" target="_blank" rel="me noopener">@shotbygambit &#8599;</a>
       </div>
 
       <h1 class="wordmark" aria-label="Gambit Marketing">
@@ -381,7 +435,7 @@
       <div class="hero-foot">
         <p class="tagline">Calculated moves. <em>Meaningful risks.</em></p>
         <div class="hero-aside">
-          <p class="sub"><strong>Your social media experts.</strong> Strategy, content and paid social for brands that would rather be talked about than scrolled past.</p>
+          <p class="sub"><strong>Seen the work on Instagram?</strong> This is what it does for a business. Strategy, content and paid social for brands that would rather be talked about than scrolled past.</p>
           <a class="btn" href="#contact">
             Contact us now
             <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 12 12 2M4 2h8v8"/></svg>
@@ -397,9 +451,33 @@
       </div>
     </section>
 
+    <section class="problem pad" data-theme="accent">
+      <div class="split">
+        <div class="label mono"><span>The problem</span></div>
+        <div class="body">
+          <h2 class="big reveal">Posting every day and getting nothing back?</h2>
+          <p class="lede reveal">Most small brands aren't bad at social. They're busy. And on a feed, busy looks exactly like absent.</p>
+          <ul class="trio">
+            <li class="reveal">
+              <h3>It looks like everyone else's.</h3>
+              <p>Same templates, same trends, same silence.</p>
+            </li>
+            <li class="reveal">
+              <h3>It eats your week.</h3>
+              <p>You run a business. Social became a second job you never applied for.</p>
+            </li>
+            <li class="reveal">
+              <h3>The numbers mean nothing.</h3>
+              <p>Likes aren't customers. Followers aren't revenue. You can't tell what's working.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
     <section class="what pad" id="what" data-theme="light">
       <div class="split">
-        <div class="label mono"><span>What we do</span></div>
+        <div class="label mono"><span>The fix</span></div>
         <div class="body">
           <h2 class="big reveal">We run social for brands that would rather be talked about than scrolled past.</h2>
           <p class="lede reveal">Strategy, content and paid, handled by people who actually post. No forty-page decks and no buzzwords. A plan, the work, and numbers on your desk every Monday.</p>
@@ -422,6 +500,70 @@
               <p>Comments, DMs, collabs, and the unglamorous work of turning followers into people who actually buy.</p>
             </li>
           </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="changes pad" data-theme="dark">
+      <div class="split">
+        <div class="label mono"><span>What changes</span></div>
+        <div class="body">
+          <h2 class="big reveal">Social stops being a chore and starts being a channel.</h2>
+          <p class="lede reveal">Here's what that looks like a few months in.</p>
+          <ul class="trio">
+            <li class="reveal">
+              <h3>A feed that looks like you.</h3>
+              <p>Not a template. Shot and cut for your brand, in your voice, on your schedule.</p>
+            </li>
+            <li class="reveal">
+              <h3>Your week back.</h3>
+              <p>Content planned, made and posted without you chasing anyone. You approve, we run.</p>
+            </li>
+            <li class="reveal">
+              <h3>Numbers you can act on.</h3>
+              <p>A short report every Monday that says what worked, what didn't, and what we're doing next.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="proof pad" data-theme="light">
+      <div class="split">
+        <div class="label mono"><span>The proof</span></div>
+        <div class="body">
+          <h2 class="big reveal">Don't take our word for it. Watch.</h2>
+          <p class="lede reveal">A few recent pieces. The full reel lives on Instagram.</p>
+          <div class="clips reveal">
+            <a class="clip" href="https://www.instagram.com/shotbygambit/" target="_blank" rel="noopener" aria-label="Watch our work on Instagram">
+              <video muted loop playsinline preload="metadata" poster="assets/clips/clip-1.jpg">
+                <source src="assets/clips/clip-1.mp4" type="video/mp4">
+              </video>
+              <span class="fallback"><span class="mark" aria-hidden="true"></span><span>Watch on Instagram</span></span>
+            </a>
+            <a class="clip" href="https://www.instagram.com/shotbygambit/" target="_blank" rel="noopener" aria-label="Watch our work on Instagram">
+              <video muted loop playsinline preload="metadata" poster="assets/clips/clip-2.jpg">
+                <source src="assets/clips/clip-2.mp4" type="video/mp4">
+              </video>
+              <span class="fallback"><span class="mark" aria-hidden="true"></span><span>Watch on Instagram</span></span>
+            </a>
+            <a class="clip" href="https://www.instagram.com/shotbygambit/" target="_blank" rel="noopener" aria-label="Watch our work on Instagram">
+              <video muted loop playsinline preload="metadata" poster="assets/clips/clip-3.jpg">
+                <source src="assets/clips/clip-3.mp4" type="video/mp4">
+              </video>
+              <span class="fallback"><span class="mark" aria-hidden="true"></span><span>Watch on Instagram</span></span>
+            </a>
+            <a class="clip" href="https://www.instagram.com/shotbygambit/" target="_blank" rel="noopener" aria-label="Watch our work on Instagram">
+              <video muted loop playsinline preload="metadata" poster="assets/clips/clip-4.jpg">
+                <source src="assets/clips/clip-4.mp4" type="video/mp4">
+              </video>
+              <span class="fallback"><span class="mark" aria-hidden="true"></span><span>Watch on Instagram</span></span>
+            </a>
+          </div>
+          <a class="more" href="https://www.instagram.com/shotbygambit/" target="_blank" rel="me noopener">
+            See more at @shotbygambit
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 12 12 2M4 2h8v8"/></svg>
+          </a>
         </div>
       </div>
     </section>
@@ -553,6 +695,7 @@
             <h2 class="reveal">Make your move.</h2>
             <p class="lede reveal">Tell us what you're working on. You'll hear back within one working day with an honest take and a rough plan.</p>
             <a class="email reveal" href="mailto:gambitmkt07@gmail.com">gambitmkt07@gmail.com</a>
+            <p class="alt mono reveal">or DM <a href="https://www.instagram.com/shotbygambit/" target="_blank" rel="me noopener">@shotbygambit</a></p>
           </div>
           <form class="form reveal" id="form" action="mailto:gambitmkt07@gmail.com" method="post" enctype="text/plain">
             <div class="field">
@@ -582,9 +725,8 @@
     <div class="foot-bar">
       <span>&copy; <span id="year">2026</span> Gambit Marketing</span>
       <ul>
-        <li><a href="#" rel="me">Instagram</a></li>
-        <li><a href="#" rel="me">TikTok</a></li>
-        <li><a href="#" rel="me">LinkedIn</a></li>
+        <li><a class="plain" href="https://www.instagram.com/shotbygambit/" target="_blank" rel="me noopener">Instagram @shotbygambit</a></li>
+        <li><a class="plain" href="mailto:gambitmkt07@gmail.com">gambitmkt07@gmail.com</a></li>
       </ul>
       <a href="#top">Back to top</a>
     </div>
@@ -630,6 +772,28 @@
     });
 
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Proof clips: hide the player when a file is missing, play only while on screen.
+    (() => {
+      const clips = Array.from(document.querySelectorAll('.clip'));
+      if (!clips.length) return;
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          const v = e.target.querySelector('video'); if (!v || e.target.classList.contains('missing')) return;
+          if (e.isIntersecting) { v.play().catch(() => {}); } else { v.pause(); }
+        });
+      }, { threshold: .35 });
+      clips.forEach((clip) => {
+        const v = clip.querySelector('video');
+        const src = v.querySelector('source');
+        const missing = () => { clip.classList.add('missing'); v.remove(); };
+        src.addEventListener('error', missing);
+        v.addEventListener('error', missing);
+        const check = () => { if (v.isConnected && (v.error || v.networkState === HTMLMediaElement.NETWORK_NO_SOURCE)) missing(); };
+        check(); setTimeout(check, 1500);
+        io.observe(clip);
+      });
+    })();
 
     // The board plays the Queen's Gambit Accepted once it scrolls into view, and resets when it leaves.
     (() => {
