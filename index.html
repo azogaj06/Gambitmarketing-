@@ -263,17 +263,29 @@
     }
     .clip {
       position: relative; display: block; aspect-ratio: 9 / 16;
-      background: var(--black); color: var(--white); overflow: hidden; text-decoration: none;
+      background: var(--black); color: var(--white); overflow: hidden; text-decoration: none; cursor: pointer;
     }
     .clip video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
     .clip .fallback {
-      position: absolute; inset: 0; padding: 18px;
+      position: absolute; inset: 0; padding: 18px; color: inherit; text-decoration: none;
       display: flex; flex-direction: column; justify-content: flex-end; gap: 12px;
       background: linear-gradient(180deg, rgba(244,244,242,.04), rgba(244,244,242,0) 40%);
-      opacity: 0; transition: opacity .3s;
+      opacity: 0; pointer-events: none; transition: opacity .3s;
     }
-    .clip.missing .fallback, .clip:hover .fallback { opacity: 1; }
-    .clip:hover .fallback { background: linear-gradient(0deg, rgba(11,11,13,.75), rgba(11,11,13,0) 55%); }
+    .clip.missing .fallback { opacity: 1; pointer-events: auto; }
+    .clip .sound {
+      position: absolute; right: 10px; bottom: 10px; width: 36px; height: 36px;
+      display: grid; place-items: center; padding: 0;
+      background: rgba(11, 11, 13, .55); color: var(--white); border: 1px solid rgba(244,244,242,.25);
+      cursor: pointer; transition: background .2s, border-color .2s;
+    }
+    .clip .sound svg { width: 18px; height: 18px; }
+    .clip .sound .wave { opacity: 0; }
+    .clip.on .sound { background: var(--accent); border-color: var(--accent); }
+    .clip.on .sound .wave { opacity: 1; }
+    .clip.on .sound .slash { opacity: 0; }
+    .clip.missing .sound { display: none; }
+    .clip:focus-within .sound { outline: 2px solid var(--white); outline-offset: 2px; }
     .clip .fallback .mark { height: 34px; }
     .clip .fallback span:last-child { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
     .proof .more {
@@ -533,32 +545,36 @@
         <div class="label mono"><span>The proof</span></div>
         <div class="body">
           <h2 class="big reveal">Don't take our word for it. Watch.</h2>
-          <p class="lede reveal">A few recent pieces. The full reel lives on Instagram.</p>
+          <p class="lede reveal">A few recent pieces. Tap one for sound. The full reel lives on Instagram.</p>
           <div class="clips reveal">
-            <a class="clip" href="https://www.instagram.com/shotbygambit/" target="_blank" rel="noopener" aria-label="Watch our work on Instagram">
+            <div class="clip">
               <video muted loop playsinline preload="metadata" poster="assets/clips/clip-1.jpg">
                 <source src="assets/clips/clip-1.mp4" type="video/mp4">
               </video>
-              <span class="fallback"><span class="mark" aria-hidden="true"></span><span>Watch on Instagram</span></span>
-            </a>
-            <a class="clip" href="https://www.instagram.com/shotbygambit/" target="_blank" rel="noopener" aria-label="Watch our work on Instagram">
+              <button class="sound" type="button" aria-label="Turn sound on" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path class="wave" d="M16 9.5a4 4 0 0 1 0 5M18.5 7a7.5 7.5 0 0 1 0 10"/><path class="slash" d="M3 3l18 18"/></svg></button>
+              <a class="fallback" href="https://www.instagram.com/shotbygambit/" target="_blank" rel="noopener" tabindex="-1"><span class="mark" aria-hidden="true"></span><span>Watch on Instagram</span></a>
+            </div>
+            <div class="clip">
               <video muted loop playsinline preload="metadata" poster="assets/clips/clip-2.jpg">
                 <source src="assets/clips/clip-2.mp4" type="video/mp4">
               </video>
-              <span class="fallback"><span class="mark" aria-hidden="true"></span><span>Watch on Instagram</span></span>
-            </a>
-            <a class="clip" href="https://www.instagram.com/shotbygambit/" target="_blank" rel="noopener" aria-label="Watch our work on Instagram">
+              <button class="sound" type="button" aria-label="Turn sound on" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path class="wave" d="M16 9.5a4 4 0 0 1 0 5M18.5 7a7.5 7.5 0 0 1 0 10"/><path class="slash" d="M3 3l18 18"/></svg></button>
+              <a class="fallback" href="https://www.instagram.com/shotbygambit/" target="_blank" rel="noopener" tabindex="-1"><span class="mark" aria-hidden="true"></span><span>Watch on Instagram</span></a>
+            </div>
+            <div class="clip">
               <video muted loop playsinline preload="metadata" poster="assets/clips/clip-3.jpg">
                 <source src="assets/clips/clip-3.mp4" type="video/mp4">
               </video>
-              <span class="fallback"><span class="mark" aria-hidden="true"></span><span>Watch on Instagram</span></span>
-            </a>
-            <a class="clip" href="https://www.instagram.com/shotbygambit/" target="_blank" rel="noopener" aria-label="Watch our work on Instagram">
+              <button class="sound" type="button" aria-label="Turn sound on" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path class="wave" d="M16 9.5a4 4 0 0 1 0 5M18.5 7a7.5 7.5 0 0 1 0 10"/><path class="slash" d="M3 3l18 18"/></svg></button>
+              <a class="fallback" href="https://www.instagram.com/shotbygambit/" target="_blank" rel="noopener" tabindex="-1"><span class="mark" aria-hidden="true"></span><span>Watch on Instagram</span></a>
+            </div>
+            <div class="clip">
               <video muted loop playsinline preload="metadata" poster="assets/clips/clip-4.jpg">
                 <source src="assets/clips/clip-4.mp4" type="video/mp4">
               </video>
-              <span class="fallback"><span class="mark" aria-hidden="true"></span><span>Watch on Instagram</span></span>
-            </a>
+              <button class="sound" type="button" aria-label="Turn sound on" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path class="wave" d="M16 9.5a4 4 0 0 1 0 5M18.5 7a7.5 7.5 0 0 1 0 10"/><path class="slash" d="M3 3l18 18"/></svg></button>
+              <a class="fallback" href="https://www.instagram.com/shotbygambit/" target="_blank" rel="noopener" tabindex="-1"><span class="mark" aria-hidden="true"></span><span>Watch on Instagram</span></a>
+            </div>
           </div>
           <a class="more" href="https://www.instagram.com/shotbygambit/" target="_blank" rel="me noopener">
             See more at @shotbygambit
@@ -773,14 +789,21 @@
 
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Proof clips: hide the player when a file is missing, play only while on screen.
+    // Proof clips: autoplay muted while on screen, tap for sound, hide the player when a file is missing.
     (() => {
       const clips = Array.from(document.querySelectorAll('.clip'));
       if (!clips.length) return;
+      const setSound = (clip, on) => {
+        const v = clip.querySelector('video'); if (!v) return;
+        v.muted = !on; clip.classList.toggle('on', on);
+        const b = clip.querySelector('.sound');
+        if (b) { b.setAttribute('aria-pressed', String(on)); b.setAttribute('aria-label', on ? 'Turn sound off' : 'Turn sound on'); }
+      };
       const io = new IntersectionObserver((entries) => {
         entries.forEach((e) => {
-          const v = e.target.querySelector('video'); if (!v || e.target.classList.contains('missing')) return;
-          if (e.isIntersecting) { v.play().catch(() => {}); } else { v.pause(); }
+          const clip = e.target, v = clip.querySelector('video');
+          if (!v || clip.classList.contains('missing')) return;
+          if (e.isIntersecting) { v.play().catch(() => {}); } else { v.pause(); setSound(clip, false); }
         });
       }, { threshold: .35 });
       clips.forEach((clip) => {
@@ -791,6 +814,14 @@
         v.addEventListener('error', missing);
         const check = () => { if (v.isConnected && (v.error || v.networkState === HTMLMediaElement.NETWORK_NO_SOURCE)) missing(); };
         check(); setTimeout(check, 1500);
+        clip.addEventListener('click', (ev) => {
+          if (clip.classList.contains('missing') || !v.isConnected) return;
+          ev.preventDefault();
+          const on = v.muted;
+          clips.forEach((c) => { if (c !== clip) setSound(c, false); });
+          setSound(clip, on);
+          if (on) { v.currentTime = 0; v.play().catch(() => {}); }
+        });
         io.observe(clip);
       });
     })();
