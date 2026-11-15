@@ -289,8 +289,9 @@
     .clip:focus-within .sound { outline: 2px solid var(--white); outline-offset: 2px; }
     .clip .fallback .mark { height: 34px; }
     .clip .fallback span:last-child { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+    .proof .more-row { display: flex; flex-wrap: wrap; gap: 14px 36px; margin-top: 32px; }
     .proof .more {
-      display: inline-flex; align-items: center; gap: 12px; margin-top: 32px;
+      display: inline-flex; align-items: center; gap: 12px;
       font-weight: 600; letter-spacing: -.01em; text-decoration: none;
       border-bottom: 2px solid currentColor; padding-bottom: 4px;
     }
@@ -300,19 +301,6 @@
     .contact .alt { margin-top: 18px; opacity: .85; }
     .contact .alt a { text-decoration: none; border-bottom: 1px solid currentColor; }
     .foot-bar a.plain { text-transform: none; letter-spacing: 0; }
-
-    /* ---------- gallery ---------- */
-    .work { background: var(--white); color: var(--black); }
-    .work .lede { color: var(--muted); }
-    .gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 48px; }
-    .more-btn {
-      margin-top: 28px; display: inline-flex; align-items: center; gap: 12px; text-decoration: none;
-      padding: 16px 22px; background: var(--black); color: var(--white); border: 1px solid var(--black);
-      font: inherit; font-weight: 600; letter-spacing: -.01em; cursor: pointer; transition: background .25s, color .25s;
-    }
-    .more-btn:hover { background: transparent; color: var(--black); }
-    .more-btn svg { width: 14px; height: 14px; transition: transform .35s var(--ease); }
-    .more-btn:hover svg { transform: translate(3px, -3px); }
 
     /* ---------- the gambit ---------- */
     .gambit { background: var(--black); color: var(--white); }
@@ -417,7 +405,7 @@
       .services li { grid-template-columns: 1fr; gap: 8px; }
       .gambit .body, .contact .body { grid-template-columns: 1fr; }
       .trio { grid-template-columns: 1fr; gap: 24px; }
-      .clips, .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .clips { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
       .board-wrap { margin-inline: 0; }
       .foot-bar { justify-content: flex-start; }
     }
@@ -559,7 +547,7 @@
         <div class="label mono"><span>The proof</span></div>
         <div class="body">
           <h2 class="big reveal">Don't take our word for it. Watch.</h2>
-          <p class="lede reveal">A few recent pieces. Tap one for sound. The full reel lives on Instagram.</p>
+          <p class="lede reveal">A few recent pieces. Tap one for sound.</p>
           <div class="clips reveal">
             <div class="clip">
               <video muted loop playsinline preload="metadata" poster="assets/clips/clip-1.jpg">
@@ -590,10 +578,16 @@
               <a class="fallback" href="https://www.instagram.com/shotbygambit/" target="_blank" rel="noopener" tabindex="-1"><span class="mark" aria-hidden="true"></span><span>Watch on Instagram</span></a>
             </div>
           </div>
-          <a class="more" href="https://www.instagram.com/shotbygambit/" target="_blank" rel="me noopener">
-            See more at @shotbygambit
-            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 12 12 2M4 2h8v8"/></svg>
-          </a>
+          <div class="more-row">
+            <a class="more" href="work.html">
+              See more videos
+              <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 12 12 2M4 2h8v8"/></svg>
+            </a>
+            <a class="more" href="https://www.instagram.com/shotbygambit/" target="_blank" rel="me noopener">
+              See more at @shotbygambit
+              <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 12 12 2M4 2h8v8"/></svg>
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -713,21 +707,6 @@
 <rect x='.5' y='.5' width='399' height='399' fill='none' stroke='rgba(244,244,242,.22)'/>
 </svg>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="work pad" id="work" data-theme="light">
-      <div class="split">
-        <div class="label mono"><span>The work</span></div>
-        <div class="body">
-          <h2 class="big reveal">More of what we've made.</h2>
-          <p class="lede reveal">A few more. Tap any video for sound.</p>
-          <div class="gallery" id="gallery"></div>
-          <a class="more-btn" id="more" href="work.html">
-            See all our work
-            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 12 12 2M4 2h8v8"/></svg>
-          </a>
         </div>
       </div>
     </section>
@@ -853,30 +832,6 @@
       };
       document.querySelectorAll('.clip').forEach(setup);
 
-      // Gallery teaser: the first six videos (featured clips, then assets/gallery/gallery-N.mp4); the full set is on work.html.
-      const gallery = document.getElementById('gallery');
-      if (!gallery) return;
-      const IG = 'https://www.instagram.com/shotbygambit/';
-      const SPEAKER = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path class="wave" d="M16 9.5a4 4 0 0 1 0 5M18.5 7a7.5 7.5 0 0 1 0 10"/><path class="slash" d="M3 3l18 18"/></svg>';
-      const tile = (base) => {
-        const el = document.createElement('div'); el.className = 'clip';
-        el.innerHTML = '<video muted loop playsinline preload="metadata" poster="' + base + '.jpg"><source src="' + base + '.mp4" type="video/mp4"></video>'
-          + '<button class="sound" type="button" aria-label="Turn sound on" aria-pressed="false">' + SPEAKER + '</button>'
-          + '<a class="fallback" href="' + IG + '" target="_blank" rel="noopener" tabindex="-1"><span class="mark" aria-hidden="true"></span><span>Watch on Instagram</span></a>';
-        return el;
-      };
-      const TEASER = 6;
-      const items = ['assets/clips/clip-1', 'assets/clips/clip-2', 'assets/clips/clip-3', 'assets/clips/clip-4'];
-      let shown = 0;
-      const render = () => { items.slice(shown, TEASER).forEach((b) => { const el = tile(b); gallery.appendChild(el); setup(el); shown++; }); };
-      render();
-      (async () => {
-        for (let i = 1; i <= TEASER; i++) {
-          try { const r = await fetch('assets/gallery/gallery-' + i + '.mp4', { method: 'HEAD' }); if (!r.ok) break; items.push('assets/gallery/gallery-' + i); }
-          catch (_) { break; }
-        }
-        render();
-      })();
     })();
 
     // The board plays the Queen's Gambit Accepted once it scrolls into view, and resets when it leaves.
