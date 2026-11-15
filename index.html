@@ -94,6 +94,7 @@
       -webkit-mask: var(--mark) center / contain no-repeat;
       mask: var(--mark) center / contain no-repeat;
     }
+    .top .links { display: flex; gap: 22px; }
     .top .cta {
       font-family: var(--mono); font-size: 12px; letter-spacing: .07em; text-transform: uppercase;
       text-decoration: none;
@@ -300,6 +301,18 @@
     .contact .alt a { text-decoration: none; border-bottom: 1px solid currentColor; }
     .foot-bar a.plain { text-transform: none; letter-spacing: 0; }
 
+    /* ---------- gallery ---------- */
+    .work { background: var(--white); color: var(--black); }
+    .work .lede { color: var(--muted); }
+    .gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 48px; }
+    .more-btn {
+      margin-top: 28px; display: inline-flex; align-items: center; gap: 12px;
+      padding: 16px 22px; background: var(--black); color: var(--white); border: 1px solid var(--black);
+      font: inherit; font-weight: 600; letter-spacing: -.01em; cursor: pointer; transition: background .25s, color .25s;
+    }
+    .more-btn:hover { background: transparent; color: var(--black); }
+    .more-btn[hidden] { display: none; }
+
     /* ---------- the gambit ---------- */
     .gambit { background: var(--black); color: var(--white); }
     .gambit .body {
@@ -403,7 +416,7 @@
       .services li { grid-template-columns: 1fr; gap: 8px; }
       .gambit .body, .contact .body { grid-template-columns: 1fr; }
       .trio { grid-template-columns: 1fr; gap: 24px; }
-      .clips { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .clips, .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
       .board-wrap { margin-inline: 0; }
       .foot-bar { justify-content: flex-start; }
     }
@@ -424,7 +437,7 @@
 
   <header class="top">
     <a class="brand" href="#top"><span class="mark" aria-hidden="true"></span>Gambit</a>
-    <a class="cta" href="#contact">Email us</a>
+    <nav class="links"><a class="cta" href="#work">Work</a><a class="cta" href="#contact">Email us</a></nav>
   </header>
 
   <main id="top">
@@ -703,6 +716,18 @@
       </div>
     </section>
 
+    <section class="work pad" id="work" data-theme="light">
+      <div class="split">
+        <div class="label mono"><span>The work</span></div>
+        <div class="body">
+          <h2 class="big reveal">More of what we've made.</h2>
+          <p class="lede reveal">Tap any video for sound.</p>
+          <div class="gallery" id="gallery"></div>
+          <button class="more-btn" id="more" type="button" hidden>Show more</button>
+        </div>
+      </div>
+    </section>
+
     <section class="contact pad" id="contact" data-theme="accent">
       <div class="split">
         <div class="label mono"><span>Contact</span></div>
@@ -789,10 +814,9 @@
 
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Proof clips: autoplay muted while on screen, tap for sound, hide the player when a file is missing.
+    // Video tiles: autoplay muted while on screen, tap for sound, hide the player when a file is missing.
     (() => {
-      const clips = Array.from(document.querySelectorAll('.clip'));
-      if (!clips.length) return;
+      const all = [];
       const setSound = (clip, on) => {
         const v = clip.querySelector('video'); if (!v) return;
         v.muted = !on; clip.classList.toggle('on', on);
@@ -806,24 +830,53 @@
           if (e.isIntersecting) { v.play().catch(() => {}); } else { v.pause(); setSound(clip, false); }
         });
       }, { threshold: .35 });
-      clips.forEach((clip) => {
-        const v = clip.querySelector('video');
+      const setup = (clip) => {
+        const v = clip.querySelector('video'); if (!v) return;
         const src = v.querySelector('source');
         const missing = () => { clip.classList.add('missing'); v.remove(); };
         src.addEventListener('error', missing);
         v.addEventListener('error', missing);
-        const check = () => { if (v.isConnected && (v.error || v.networkState === HTMLMediaElement.NETWORK_NO_SOURCE)) missing(); };
-        check(); setTimeout(check, 1500);
+        if (v.error) missing();
         clip.addEventListener('click', (ev) => {
           if (clip.classList.contains('missing') || !v.isConnected) return;
           ev.preventDefault();
           const on = v.muted;
-          clips.forEach((c) => { if (c !== clip) setSound(c, false); });
+          all.forEach((c) => { if (c !== clip) setSound(c, false); });
           setSound(clip, on);
           if (on) { v.currentTime = 0; v.play().catch(() => {}); }
         });
-        io.observe(clip);
-      });
+        all.push(clip); io.observe(clip);
+      };
+      document.querySelectorAll('.clip').forEach(setup);
+
+      // Gallery: the four featured clips, then every assets/gallery/gallery-N.mp4 numbered from 1 with no gaps.
+      const gallery = document.getElementById('gallery'), more = document.getElementById('more');
+      if (!gallery || !more) return;
+      const IG = 'https://www.instagram.com/shotbygambit/';
+      const SPEAKER = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path class="wave" d="M16 9.5a4 4 0 0 1 0 5M18.5 7a7.5 7.5 0 0 1 0 10"/><path class="slash" d="M3 3l18 18"/></svg>';
+      const tile = (base) => {
+        const el = document.createElement('div'); el.className = 'clip';
+        el.innerHTML = '<video muted loop playsinline preload="metadata" poster="' + base + '.jpg"><source src="' + base + '.mp4" type="video/mp4"></video>'
+          + '<button class="sound" type="button" aria-label="Turn sound on" aria-pressed="false">' + SPEAKER + '</button>'
+          + '<a class="fallback" href="' + IG + '" target="_blank" rel="noopener" tabindex="-1"><span class="mark" aria-hidden="true"></span><span>Watch on Instagram</span></a>';
+        return el;
+      };
+      const PAGE = 6;
+      const items = ['assets/clips/clip-1', 'assets/clips/clip-2', 'assets/clips/clip-3', 'assets/clips/clip-4'];
+      let shown = 0;
+      const render = () => {
+        items.slice(shown, shown + PAGE).forEach((b) => { const el = tile(b); gallery.appendChild(el); setup(el); shown++; });
+        more.hidden = shown >= items.length;
+      };
+      more.addEventListener('click', render);
+      render();
+      (async () => {
+        for (let i = 1; i <= 60; i++) {
+          try { const r = await fetch('assets/gallery/gallery-' + i + '.mp4', { method: 'HEAD' }); if (!r.ok) break; items.push('assets/gallery/gallery-' + i); }
+          catch (_) { break; }
+        }
+        if (shown < PAGE) render(); else more.hidden = shown >= items.length;
+      })();
     })();
 
     // The board plays the Queen's Gambit Accepted once it scrolls into view, and resets when it leaves.
