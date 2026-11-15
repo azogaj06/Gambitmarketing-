@@ -306,12 +306,13 @@
     .work .lede { color: var(--muted); }
     .gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 48px; }
     .more-btn {
-      margin-top: 28px; display: inline-flex; align-items: center; gap: 12px;
+      margin-top: 28px; display: inline-flex; align-items: center; gap: 12px; text-decoration: none;
       padding: 16px 22px; background: var(--black); color: var(--white); border: 1px solid var(--black);
       font: inherit; font-weight: 600; letter-spacing: -.01em; cursor: pointer; transition: background .25s, color .25s;
     }
     .more-btn:hover { background: transparent; color: var(--black); }
-    .more-btn[hidden] { display: none; }
+    .more-btn svg { width: 14px; height: 14px; transition: transform .35s var(--ease); }
+    .more-btn:hover svg { transform: translate(3px, -3px); }
 
     /* ---------- the gambit ---------- */
     .gambit { background: var(--black); color: var(--white); }
@@ -437,7 +438,7 @@
 
   <header class="top">
     <a class="brand" href="#top"><span class="mark" aria-hidden="true"></span>Gambit</a>
-    <nav class="links"><a class="cta" href="#work">Work</a><a class="cta" href="#contact">Email us</a></nav>
+    <nav class="links"><a class="cta" href="work.html">Work</a><a class="cta" href="#contact">Email us</a></nav>
   </header>
 
   <main id="top">
@@ -721,9 +722,12 @@
         <div class="label mono"><span>The work</span></div>
         <div class="body">
           <h2 class="big reveal">More of what we've made.</h2>
-          <p class="lede reveal">Tap any video for sound.</p>
+          <p class="lede reveal">A few more. Tap any video for sound.</p>
           <div class="gallery" id="gallery"></div>
-          <button class="more-btn" id="more" type="button" hidden>Show more</button>
+          <a class="more-btn" id="more" href="work.html">
+            See all our work
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 12 12 2M4 2h8v8"/></svg>
+          </a>
         </div>
       </div>
     </section>
@@ -849,9 +853,9 @@
       };
       document.querySelectorAll('.clip').forEach(setup);
 
-      // Gallery: the four featured clips, then every assets/gallery/gallery-N.mp4 numbered from 1 with no gaps.
-      const gallery = document.getElementById('gallery'), more = document.getElementById('more');
-      if (!gallery || !more) return;
+      // Gallery teaser: the first six videos (featured clips, then assets/gallery/gallery-N.mp4); the full set is on work.html.
+      const gallery = document.getElementById('gallery');
+      if (!gallery) return;
       const IG = 'https://www.instagram.com/shotbygambit/';
       const SPEAKER = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path class="wave" d="M16 9.5a4 4 0 0 1 0 5M18.5 7a7.5 7.5 0 0 1 0 10"/><path class="slash" d="M3 3l18 18"/></svg>';
       const tile = (base) => {
@@ -861,21 +865,17 @@
           + '<a class="fallback" href="' + IG + '" target="_blank" rel="noopener" tabindex="-1"><span class="mark" aria-hidden="true"></span><span>Watch on Instagram</span></a>';
         return el;
       };
-      const PAGE = 6;
+      const TEASER = 6;
       const items = ['assets/clips/clip-1', 'assets/clips/clip-2', 'assets/clips/clip-3', 'assets/clips/clip-4'];
       let shown = 0;
-      const render = () => {
-        items.slice(shown, shown + PAGE).forEach((b) => { const el = tile(b); gallery.appendChild(el); setup(el); shown++; });
-        more.hidden = shown >= items.length;
-      };
-      more.addEventListener('click', render);
+      const render = () => { items.slice(shown, TEASER).forEach((b) => { const el = tile(b); gallery.appendChild(el); setup(el); shown++; }); };
       render();
       (async () => {
-        for (let i = 1; i <= 60; i++) {
+        for (let i = 1; i <= TEASER; i++) {
           try { const r = await fetch('assets/gallery/gallery-' + i + '.mp4', { method: 'HEAD' }); if (!r.ok) break; items.push('assets/gallery/gallery-' + i); }
           catch (_) { break; }
         }
-        if (shown < PAGE) render(); else more.hidden = shown >= items.length;
+        render();
       })();
     })();
 
